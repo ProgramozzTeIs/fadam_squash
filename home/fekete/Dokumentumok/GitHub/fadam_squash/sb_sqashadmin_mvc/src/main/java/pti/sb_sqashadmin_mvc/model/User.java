@@ -31,8 +31,6 @@ public class User {
 		@Column(name = "loggedin")
 		private boolean loggedin;
 		
-		@Column(name = "firstlogin")
-		private boolean firstLoggedIn;
 		
 		@Column(name = "lastlogindate")
 		private LocalDateTime lastLoginDate;
@@ -77,13 +75,6 @@ public class User {
 			this.loggedin = loggedin;
 		}
 
-		public boolean isFirstLoggedIn() {
-			return firstLoggedIn;
-		}
-
-		public void setFirstLoggedIn(boolean firstLoggedIn) {
-			this.firstLoggedIn = firstLoggedIn;
-		}
 
 		public LocalDateTime getLastLoginDate() {
 			return lastLoginDate;

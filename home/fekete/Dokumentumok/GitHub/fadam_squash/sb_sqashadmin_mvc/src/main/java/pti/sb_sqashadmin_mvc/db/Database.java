@@ -60,4 +60,54 @@ public class Database {
 		
 	}
 
+	public User getUserByNameAndPassword(String userName, String password) {
+		
+		Session session =sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		SelectionQuery<User> query = session.createSelectionQuery("SELECT u FROM User u WHERE u.name = ?1 AND u.password = ?2",User.class);
+		query.setParameter(1, userName);
+		query.setParameter(2, password);
+		
+		List<User> users = query.getResultList();
+		
+		User user = null;
+		
+		if(users.size() > 0) {
+			
+			user = users.get(0);
+			
+		}
+		
+		tx.commit();
+		session.close();
+		
+		return user;
+	}
+
+	public void updateUser(User user) {
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.merge(user);
+		
+		tx.commit();
+		session.close();
+		
+	}
+
+	public User getUserById(int id) {
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		User user = session.get(User.class, id);
+		
+		tx.commit();
+		session.close();
+		
+		return user;
+	}
+
 }

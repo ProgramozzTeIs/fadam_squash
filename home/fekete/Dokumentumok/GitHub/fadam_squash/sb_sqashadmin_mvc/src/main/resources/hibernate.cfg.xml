@@ -11,9 +11,9 @@
 		<property name="connection.username">root</property>
 		<property name="connection.password">root</property>
 		
-		<mapping class="pti.sb_squashadmin_mvc.model.User" />
-		<mapping class="pti.sb_squashadmin_mvc.model.Location" />
-		<mapping class="pti.sb_squashadmin_mvc.model.Match" />
+		<mapping class="pti.sb_sqashadmin_mvc.model.User" />
+		<mapping class="pti.sb_sqashadmin_mvc.model.Location" />
+		<mapping class="pti.sb_sqashadmin_mvc.model.Match" />
 			
 	</session-factory>
 </hibernate-configuration>
