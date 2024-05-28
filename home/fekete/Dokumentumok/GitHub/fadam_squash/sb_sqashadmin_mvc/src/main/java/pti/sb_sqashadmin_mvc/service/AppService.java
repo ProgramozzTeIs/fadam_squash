@@ -65,4 +65,16 @@ public class AppService {
 		return matchListDto;
 	}
 
+
+
+	public void setFirstLogin(int uid) {
+		
+		User user = db.getUserById(uid);
+		
+		user.setLastLoginDate(LocalDateTime.now());
+		user.setLoggedin(true);
+
+		db.updateUser(user);
+	}
+
 }

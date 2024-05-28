@@ -5,6 +5,17 @@
 <title>first login</title>
 </head>
 <body>
-
+	
+	<h5>Kérlek válassz új jelszót!</h5>
+	<form action="/login/changepwd">
+	
+	<label>Új jelszó</label>
+		<input type="password" name = "pwd1"/>
+		<label>Jelszó ismét</label>
+		<input type="password" name = "pwd2"/>
+		<input type="hidden" value = "userDto.getId()"/>
+		<input type="submit">
+	</form>
+	
 </body>
 </html>

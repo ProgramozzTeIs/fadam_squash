@@ -61,4 +61,30 @@ public class AppController {
 		
 		return returnString;
 	}
+	@PostMapping("/login/changepwd")
+	public String changePwd(Model model,
+							@RequestParam("pwd1") String pwd1,
+							@RequestParam("pwd2") String pwd2,
+							@RequestParam("uid") int uid) {
+		
+		
+		MatchListDTO matchDto = service.getAllMatchs(uid);
+		
+		String returnString = "firstlogin.html";
+		
+		if (pwd1.equals(pwd2)) {
+			
+			returnString = "index.html";
+			service.setFirstLogin(uid);
+		}
+		
+		return "";
+	}
+
+
+
+
 }
+
+
+
