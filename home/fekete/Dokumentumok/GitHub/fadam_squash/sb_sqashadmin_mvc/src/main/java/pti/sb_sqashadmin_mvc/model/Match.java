@@ -1,5 +1,7 @@
 package pti.sb_sqashadmin_mvc.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +31,19 @@ public class Match {
 	
 	@Column(name = "placeid")
 	private int placeId;
+	
+	@Column(name = "matchdate")
+	private LocalDate matchDate;
+
+
+	public LocalDate getMatchDate() {
+		return matchDate;
+	}
+
+
+	public void setMatchDate(LocalDate matchDate) {
+		this.matchDate = matchDate;
+	}
 
 
 	public int getId() {

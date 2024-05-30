@@ -10,6 +10,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.SelectionQuery;
 
 import pti.sb_sqashadmin_mvc.model.Location;
+import pti.sb_sqashadmin_mvc.model.Match;
 import pti.sb_sqashadmin_mvc.model.User;
 
 public class Database {
@@ -108,6 +109,48 @@ public class Database {
 		session.close();
 		
 		return user;
+	}
+
+	public List<Match> getAllMatchs(Integer playerId, Integer locationId) {
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		String hqlString = "";
+		
+		SelectionQuery<Match> q = null;
+		
+		if (playerId != null) {
+			
+			hqlString = "SELECT m FROM Match m WHERE m.user1Id = ?1 OR m.user2Id = ?1";
+			q = session.createSelectionQuery(hqlString, Match.class);
+			q.setParameter(1, playerId);
+		}
+		
+		else if (locationId != null) {
+			
+			hqlString = "SELECT m FROM Match m WHERE m.placeId = ?1";
+			q = session.createSelectionQuery(hqlString, Match.class);
+			q.setParameter(1, locationId);
+			
+		}
+		
+		else {
+			
+			hqlString = "SELECT m FROM Match m";
+			q = session.createSelectionQuery(hqlString, Match.class);
+			
+		}
+		
+		
+		
+		List<Match> matchs = q.getResultList();
+		
+		tx.commit();
+		session.close();
+		
+		
+		return matchs;
 	}
 
 }

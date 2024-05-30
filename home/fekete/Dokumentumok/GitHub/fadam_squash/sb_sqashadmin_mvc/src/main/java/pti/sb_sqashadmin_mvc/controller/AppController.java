@@ -45,7 +45,7 @@ public class AppController {
 		
 		else {
 			
-			MatchListDTO matchDto = service.getAllMatchs(userDto.getId());
+			MatchListDTO matchDto = service.getAllMatchs(userDto.getId(), null, null);
 			
 			if(matchDto!= null) {
 				
@@ -56,13 +56,13 @@ public class AppController {
 				
 				returnString = "firstlogin.html";
 				model.addAttribute("userDto", userDto);
-				System.out.println(userDto.getId());
+				
 			}
 		}
 		
 		return returnString;
 	}
-	@GetMapping("/login/changepwd")
+	@PostMapping("/login/changepwd")
 	public String changePwd(Model model,
 							@RequestParam("pwd1") String pwd1,
 							@RequestParam("pwd2") String pwd2,
@@ -74,10 +74,12 @@ public class AppController {
 
 		MatchListDTO matchDto = service.setFirstLogin(uid, pwd1, pwd2);
 		
+		model.addAttribute("matchdto", matchDto);
+		
 		if(matchDto == null) {
 
 			
-			UserDTO userDto = service.getUserDTOFromUser(uid);
+			UserDTO userDto = service.getUserDTOFromUserId(uid);
 			
 			returnString = "firstlogin.html";
 			model.addAttribute("userDto",userDto);

@@ -6,5 +6,37 @@
 </head>
 <body>
 
+<table>
+    <thead>
+        <tr>
+            <th>Első játékos neve</th>
+            <th>Első Játékos pontszáma</th>
+            <th>Második játékos neve</th>
+            <th>Második játékos pontszáma</th>
+            <th>Játék helyszíne</th>
+            <th>Ft/óra</th>
+            <th>Dátum</th>
+            <th>Eredmény</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="match : ${matchdto.getMatchDtos()}">
+            <td th:text="${match.getUser1Name()}"></td>
+            <td th:text="${match.getUser1Points()}"></td>
+            <td th:text="${match.getUser2Name()}"></td>
+            <td th:text="${match.getUser2Points()}"></td>
+            <td th:text="${match.getPlaceName()}"></td>
+            <td th:text="${match.getPlacePrice()}"></td>
+            <td th:text="${match.getMatchDate}"></td>
+            <td>
+                <span th:if="${match.getUser1Points() > match.getUser2Points()}" th:text="'A nyertes: ' + ${match.user1Name}"></span>
+                <span th:if="${match.getUser1Points() < match.getUser2Points()}" th:text="'A nyertes: ' + ${match.user2Name}"></span>
+                <span th:if="${match.getUser1Points() == match.getUser2Points()}" th:text="'döntetlen'"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
 </body>
 </html>
