@@ -7,13 +7,16 @@
 <body>
 	
 	<h5>Kérlek válassz új jelszót!</h5>
-	<form action="/login/changepwd">
+	
+	<p th:text="${userDto.getName()}"/>
+	
+	<form action="/login/changepwd" method = "get">
 	
 	<label>Új jelszó</label>
-		<input type="password" name = "pwd1"/>
+		<input type="password" name="pwd1"/>
 		<label>Jelszó ismét</label>
-		<input type="password" name = "pwd2"/>
-		<input type="hidden" value = "userDto.getId()"/>
+		<input type="password" name="pwd2"/>
+		<input type="hidden" name="uid" th:value="${userDto.getId()}"/>
 		<input type="submit">
 	</form>
 	

@@ -14,67 +14,74 @@ import pti.sb_sqashadmin_mvc.model.User;
 public class AppService {
 
 	private Database db;
-	
-	
+
 	@Autowired
 	public AppService() {
-		
+
 		this.db = new Database();
 	}
 
-
-
 	public UserDTO login(String userName, String password) {
-		
+
 		User user = db.getUserByNameAndPassword(userName, password);
-		
+
 		UserDTO userDto = null;
-		
-		if(user != null) {
-			
+
+		if (user != null) {
+
 			userDto = new UserDTO(user.getId(), user.isAdmin(), user.getName());
-			
-			if(user.getLastLoginDate()!= null) {
-				
+
+			if (user.getLastLoginDate() != null) {
+
 				user.setLoggedin(true);
 				user.setLastLoginDate(LocalDateTime.now());
 				db.updateUser(user);
 			}
-			
+
 		}
-		
-		
+
 		return userDto;
 	}
 
-
-
 	public MatchListDTO getAllMatchs(int id) {
-		
+
 		User user = db.getUserById(id);
-		
+
 		MatchListDTO matchListDto = null;
-		
-		if(user != null && user.isLoggedin() == true) {
-			
-			
+
+		if (user != null && user.isLoggedin() == true) {
+
 			matchListDto = new MatchListDTO();
-			
+
 		}
-		
+
 		return matchListDto;
 	}
 
+	public MatchListDTO setFirstLogin(int uid, String pwd1, String pwd2) {
 
-
-	public void setFirstLogin(int uid) {
+		MatchListDTO returnDto = null;
 		
-		User user = db.getUserById(uid);
-		
-		user.setLastLoginDate(LocalDateTime.now());
-		user.setLoggedin(true);
+		if (pwd1.equals(pwd2) && pwd1.length()>2) {
 
-		db.updateUser(user);
+			User user = db.getUserById(uid);
+
+			user.setLastLoginDate(LocalDateTime.now());
+			user.setLoggedin(true);
+			user.setPassword(pwd1);
+			db.updateUser(user);
+			returnDto = this.getAllMatchs(uid);
+		}
+		return returnDto;
+	}
+	public UserDTO getUserDTOFromUser (int userId) {
+		
+		User user = db.getUserById(userId);
+		
+		
+		UserDTO userDto = new UserDTO(user.getId(), user.isAdmin(), user.getName());
+		
+		return userDto;
 	}
 
 }
