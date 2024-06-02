@@ -6,6 +6,39 @@
 </head>
 <body>
 
+<h2 th:text="'Üdvözöllek ' + ${matchdto.getUserDto().getName()} "></h2>
+
+<div th:if="${matchdto.userDto.isAdmin()}">
+     <a th:href="@{/admin(userid=${matchdto.getUserDto().getId()})}">Admin felület</a>
+     
+</div>
+
+<form th:action="@{/logout}" method="post">
+    <input type="hidden" name="userid" th:value="${matchdto.userDto.getId()}"/>
+    <input type="submit" value= "kijelentkezés"/>
+</form>
+<h3>Szűrés játékos alapján</h3>
+<form action="/matchs/search/user" method="get">
+    <select name="searcheduserid">
+        <option th:each="dto : ${matchdto.getUserList()}"
+                th:value="${dto.getId()}"
+                th:text="${dto.getName()}">Név</option>
+    </select> <input type="hidden" th:value="${matchdto.getUserDto().getId()}" name="userid" />
+		<button type="submit">Keres</button>
+</form>
+
+<h3>Szűrés helyszín alapján</h3>
+<form action="/matchs/search/location" method="get">
+    <select name="searchedlocationid">
+        <option th:each="dto : ${matchdto.getLocationList()}"
+                th:value="${dto.getId()}"
+                th:text="${dto.getName()}">Név</option>
+    </select> <input type="hidden" th:value="${matchdto.getUserDto().getId()}" name="userid" />
+		<button type="submit">Keres</button>
+</form>
+
+<a th:href="@{/match/all(userid=${matchdto.getUserDto().getId()})}">szűrő törlése</a>
+
 <table>
     <thead>
         <tr>

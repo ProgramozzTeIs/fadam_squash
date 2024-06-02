@@ -3,11 +3,13 @@ package pti.sb_sqashadmin_mvc.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pti.sb_sqashadmin_mvc.db.Database;
+import pti.sb_sqashadmin_mvc.dto.AdminDTO;
 import pti.sb_sqashadmin_mvc.dto.LocationDTO;
 import pti.sb_sqashadmin_mvc.dto.MatchDTO;
 import pti.sb_sqashadmin_mvc.dto.MatchListDTO;
@@ -54,8 +56,6 @@ public class AppService {
 		User user = db.getUserById(userId);
 
 		MatchListDTO matchListDto = null;
-
-		System.out.println(user.getName());
 		
 		if (user != null && user.isLoggedin() == true) {
 
@@ -114,41 +114,15 @@ public class AppService {
 				
 			}
 			
-			List<UserDTO> userList = new ArrayList<>();
-			
-			for(int userIndex = 0; userIndex < users.size(); userIndex++) {
-				
-				User currentUser = users.get(userIndex);
-				
-				UserDTO currentUserDto = getUserDTOFromUser(currentUser);
-				
-				userList.add(currentUserDto);
-				
-			}
+
 			
 			UserDTO userDto = getUserDTOFromUserId(userId);
-			
-			
-			
-			
-			List<LocationDTO> locationList = new ArrayList<>();
-			
-			for (int locationIndex = 0; locationIndex < locations.size(); locationIndex++) {
-				
-				Location CurrentLocation = locations.get(locationIndex);
-				
-				LocationDTO currentLocationDto = new LocationDTO(CurrentLocation.getId(), CurrentLocation.getName());
-				locationList.add(currentLocationDto);
-				
-			}
 
 			
-			
-			
-			matchListDto = new MatchListDTO(matchDtoList, userDto, userList, locationList);
+			matchListDto = new MatchListDTO(matchDtoList, userDto, getAllUserDTO(), getAllLocalDTO());
 
 		}
-		System.out.println(matchListDto.getMatchDtos().size());
+		
 		return matchListDto;
 	}
 
@@ -184,6 +158,105 @@ public class AppService {
 		
 		return userDto;
 	}
-	
 
+	public void logout(int userId) {
+		
+		User user = db.getUserById(userId);
+		
+		user.setLoggedin(false);
+		
+		db.updateUser(user);
+		
+	}
+
+	public AdminDTO getAdminDto(int userId) {
+		
+		AdminDTO adminDto = null;
+		User admin = db.getUserById(userId);
+		if (admin.isAdmin()==true) {
+			
+			
+			UserDTO userDto = getUserDTOFromUser(admin);
+			
+			List<UserDTO> userDtoList = getAllUserDTO();
+			
+			List<LocationDTO> locationDtoList = getAllLocalDTO();
+			
+			
+			adminDto = new AdminDTO(userDto, userDtoList, locationDtoList);
+			
+			
+			
+		}
+		return adminDto;
+	}
+	
+	private List<LocationDTO> getAllLocalDTO(){
+
+		List<Location> locations = db.getAllLocation();
+		
+		List<LocationDTO> locationList = new ArrayList<>();
+		
+		for (int locationIndex = 0; locationIndex < locations.size(); locationIndex++) {
+			
+			Location CurrentLocation = locations.get(locationIndex);
+			
+			LocationDTO currentLocationDto = new LocationDTO(CurrentLocation.getId(), CurrentLocation.getName());
+			locationList.add(currentLocationDto);
+			
+		}
+		return locationList;
+	} 
+
+
+	public void addNewUser(String newUserName) {
+		
+		User user = new User();
+		user.setId(0);
+		user.setLoggedin(false);
+		user.setName(newUserName);
+		user.setPassword(generatePassword());
+		
+		db.inserNewUser(user);
+		
+		
+	}
+	
+	private String generatePassword() {
+		
+		Random rand = new Random();
+		
+		String password = "";
+		
+		for(int index =0; index < 3; index++) {
+			int number = rand.nextInt(10);
+			
+			String numberString = number + "";
+			
+			password = password + numberString;
+					
+		}
+		return password;
+	}
+	
+	
+	
+	
+	private List<UserDTO> getAllUserDTO(){
+		
+		List<User> users = db.getAllUser();
+		
+		List<UserDTO> userList = new ArrayList<>();
+		
+		for(int userIndex = 0; userIndex < users.size(); userIndex++) { //az admint kihagyjuk a listából
+			
+			User currentUser = users.get(userIndex);
+			if (currentUser.isAdmin()==false) {
+				UserDTO currentUserDto = getUserDTOFromUser(currentUser);
+				userList.add(currentUserDto);
+			}
+			
+		}
+		return userList;
+	}
 }

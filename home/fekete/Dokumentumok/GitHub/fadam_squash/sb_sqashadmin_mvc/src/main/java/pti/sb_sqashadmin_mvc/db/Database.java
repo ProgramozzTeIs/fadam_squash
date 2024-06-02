@@ -153,4 +153,16 @@ public class Database {
 		return matchs;
 	}
 
+	public void inserNewUser(User user) {
+		// TODO Auto-generated method stub
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.persist(user);
+		
+		tx.commit();
+		session.close();
+	}
+
 }

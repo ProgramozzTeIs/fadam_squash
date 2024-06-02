@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin</title>
+</head>
+<body>
+
+	<h3>Új játékos regisztrálása</h3>
+
+	<form action="/admin/reg/user" method="post">
+	
+		<input type="text" name= "name" />
+		<input type="hidden" name="uid" th:value="${admindto.user.getId()}"/>
+		<input type="submit" value="hozzáad"/>
+	
+	
+	
+	
+	</form>
+
+</body>
+</html>
