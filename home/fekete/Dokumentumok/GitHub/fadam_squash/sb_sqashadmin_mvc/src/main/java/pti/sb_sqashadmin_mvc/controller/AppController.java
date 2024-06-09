@@ -1,6 +1,11 @@
 package pti.sb_sqashadmin_mvc.controller;
 
+
+
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -161,17 +166,48 @@ public class AppController {
 								@RequestParam("uid") int userId) {
 		
 		
-		service.addNewUser(newUserName);
 		
-		AdminDTO adminDto = service.getAdminDto(userId);
+		
+		AdminDTO adminDto = service.addNewUser(newUserName, userId);
 		
 		model.addAttribute("admindto",adminDto);
 		
 		return "admin.html";
 	}
 	
+	@PostMapping("/admin/reg/location")
+	public String adminAddPlace(Model model,
+								@RequestParam("locationname")String newLocationName,
+								@RequestParam("uid")int userId,
+								@RequestParam("address")String address,
+								@RequestParam("price")int price) {
+		
+		AdminDTO adminDto = service.addNewLocation(newLocationName, address, price, userId);
+		
+		
+		model.addAttribute("admindto",adminDto);
+		
+		return "admin.html";
+	}
+	@PostMapping("/admin/reg/match")
+	public String adminAddMatch(Model model,
+								@RequestParam("uid") int userId,
+								@RequestParam("locationid")int locationId,
+								@RequestParam("user1id") int user1Id,
+								@RequestParam("user1point")int user1Point,
+								@RequestParam("user2id") int user2Id,
+								@RequestParam("user2point")int user2Point,
+								@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+		
+		
+		AdminDTO adminDto = service.addNewMatch(userId, locationId, user1Id, user1Point, user2Id, user2Point, date);
+		
+		model.addAttribute("admindto",adminDto);
+		
+		
+		return "admin.html";
+	}
+								
+	
 	
 }
-
-
-

@@ -165,4 +165,29 @@ public class Database {
 		session.close();
 	}
 
+	public void inserNewLocation(Location location) {
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.persist(location);
+		
+		tx.commit();
+		session.close();
+		
+	}
+
+	public void insertNewMatch(Match match) {
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.persist(match);
+		
+		tx.commit();
+		session.close();
+		
+		
+	}
+
 }

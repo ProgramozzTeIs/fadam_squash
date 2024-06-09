@@ -6,17 +6,87 @@
 </head>
 <body>
 
+	<h2>Admin felület</h2>
+	<form action="/logout" method="post">
+	    <input type="hidden" name="userid" th:value="${admindto.user.getId()}"/>
+	    <input type="submit" value= "kijelentkezés"/>
+	</form>
+	
 	<h3>Új játékos regisztrálása</h3>
 
 	<form action="/admin/reg/user" method="post">
 	
-		<input type="text" name= "name" />
+		<label for="name">Felhasználó neve:</label>
+		<input type="text" name= "name" id="name" />
 		<input type="hidden" name="uid" th:value="${admindto.user.getId()}"/>
+		<input type="submit" value="hozzáad"/>
+
+	</form>
+	
+	<h3>Új pálya hozzáadása</h3>
+	
+	<form action="/admin/reg/location" method="post">
+		
+		<input type="hidden" name="uid" th:value="${admindto.user.getId()}"/>
+		<label for="name">Pálya neve:</label>
+		<input type="text" name="locationname" id="name"/>
+		<label for="address">Cím:</label>
+		<input type="text" name="address" id="address"/>
+		<label for="price">Ára:</label>
+		<input type="number" name="price" id="price"/>
+
 		<input type="submit" value="hozzáad"/>
 	
 	
+	</form>
+
+	<h3>Mérkőzés hozzáadása</h3>
+
+	<form action="/admin/reg/match" method="post">
 	
+		<input type="hidden" name="uid" th:value="${admindto.user.getId()}"/>
+		
+		<label for="locationSelect">Pálya neve:</label>
+		
+		<select id="locationSelect" name="locationid">
+            
+            <option th:each="location : ${admindto.getLocationList()}"
+                    th:value="${location.getId()}"
+                    th:text="${location.getName()}">
+            </option>
+        </select>
+		
+		<label for="user1Select">Első játékos:</label>
+		
+		<select id="user1Select" name="user1id">
+            
+            <option th:each="user : ${admindto.getUserList()}"
+                    th:value="${user.getId()}"
+                    th:text="${user.getName()}">
+            </option>
+        </select>
+        
+        <label for="user1Point">Első játékos pontjai:</label>
+        <input type="number" id="user1Point" name="user1point" min="0"/>
 	
+		<label for="user2Select">Második játékos:</label>
+	
+		<select id="user2Select" name="user2id">
+            
+            <option th:each="user : ${admindto.getUserList()}"
+                    th:value="${user.getId()}"
+                    th:text="${user.getName()}">
+            </option>
+        </select>
+        
+        <label for="user2Point">Második játékos pontjai:</label>
+        <input type="number" id="user2Point" name="user2point" min="0"/>
+	
+		<label for="date">Dátum:</label>
+        <input type="date" id="date" name="date"/>
+
+	
+		<input type="submit" value="rögzít"/>
 	</form>
 
 </body>

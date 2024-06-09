@@ -6,10 +6,14 @@
 </head>
 <body>
 	
+	<h3>Bejelentkezés</h3>
+	
 	<form action="/login" method="post">
 	
-		<input type="text" name = "username"/>
-		<input type="password" name = "password" />
+		<label for="name">Felhasználó neve:</label>
+		<input type="text" name = "username" id="name"/>
+		<label for="pwd">Jelszó:</label>
+		<input type="password" name = "password" id="pwd"/>
 		<input type="submit"/>
 	
 	</form>

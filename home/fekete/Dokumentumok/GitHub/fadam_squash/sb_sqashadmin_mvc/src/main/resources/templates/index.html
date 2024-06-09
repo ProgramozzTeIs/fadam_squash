@@ -13,7 +13,7 @@
      
 </div>
 
-<form th:action="@{/logout}" method="post">
+<form action="/logout" method="post">
     <input type="hidden" name="userid" th:value="${matchdto.userDto.getId()}"/>
     <input type="submit" value= "kijelentkezés"/>
 </form>
