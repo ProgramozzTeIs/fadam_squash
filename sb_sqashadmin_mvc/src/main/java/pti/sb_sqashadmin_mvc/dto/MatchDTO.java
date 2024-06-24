@@ -2,9 +2,7 @@ package pti.sb_sqashadmin_mvc.dto;
 
 import java.time.LocalDate;
 
-import org.springframework.web.client.RestTemplate;
 
-import pti.sb_sqashadmin_mvc.model.LocationPriceEuro;
 
 public class MatchDTO {
 
@@ -18,7 +16,7 @@ public class MatchDTO {
 	private float placePriceEur;
 
 	public MatchDTO(String user1Name, int user1Points, String user2Name, int user2Points, String placeName,
-			int placePrice, LocalDate matchDate) {
+			int placePrice, LocalDate matchDate, float placePriceEur) {
 		super();
 		this.user1Name = user1Name;
 		this.user1Points = user1Points;
@@ -27,7 +25,12 @@ public class MatchDTO {
 		this.placeName = placeName;
 		this.placePrice = placePrice;
 		this.matchDate = matchDate;
-		this.setPlacePriceEur();
+		this.placePriceEur = placePriceEur;
+		
+	}
+
+	public void setPlacePriceEur(float placePriceEur) {
+		this.placePriceEur = placePriceEur;
 	}
 
 	public String getUser1Name() {
@@ -90,17 +93,7 @@ public class MatchDTO {
 		return placePriceEur;
 	}
 
-	public void setPlacePriceEur() {
-		
-		RestTemplate restTemplate = new RestTemplate();
-		
-		String url = "http://localhost:8081/exchange?huf="+this.placePrice;
-		System.out.println(url);
-		LocationPriceEuro euro = restTemplate.getForObject(url, LocationPriceEuro.class);
-		
-		this.placePriceEur = euro.getEur();
-		System.out.println(placePriceEur);
-	}
+	
 	
 	
 	

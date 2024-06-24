@@ -11,6 +11,7 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import pti.sb_sqashadmin_mvc.db.Database;
 import pti.sb_sqashadmin_mvc.dto.AdminDTO;
@@ -19,6 +20,7 @@ import pti.sb_sqashadmin_mvc.dto.MatchDTO;
 import pti.sb_sqashadmin_mvc.dto.MatchListDTO;
 import pti.sb_sqashadmin_mvc.dto.UserDTO;
 import pti.sb_sqashadmin_mvc.model.Location;
+import pti.sb_sqashadmin_mvc.model.LocationPriceEuro;
 import pti.sb_sqashadmin_mvc.model.Match;
 import pti.sb_sqashadmin_mvc.model.User;
 
@@ -111,7 +113,10 @@ public class AppService {
 				}
 
 				MatchDTO currentMAtchDto = new MatchDTO(user1Name, currentMatch.getUser1Points(), user2Name,
-						currentMatch.getUser2Points(), locationName, locationPrice, currentMatch.getMatchDate());
+						currentMatch.getUser2Points(), locationName, locationPrice, currentMatch.getMatchDate(), this.getPlacePriceEur(locationPrice));
+				
+				
+				
 				matchDtoList.add(currentMAtchDto);
 
 			}
@@ -343,6 +348,20 @@ public class AppService {
 
 		}
 		return userList;
+	}
+		private float getPlacePriceEur(int huf) {
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		String url = "http://localhost:8081/exchange?huf="+huf;
+		
+		LocationPriceEuro euroCurr = restTemplate.getForObject(url, LocationPriceEuro.class);
+		
+		
+		float returnValue = euroCurr.getEur();
+		
+		return returnValue;
+		
 	}
 
 
