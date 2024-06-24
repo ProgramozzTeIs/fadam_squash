@@ -48,6 +48,7 @@
             <th>Második játékos pontszáma</th>
             <th>Játék helyszíne</th>
             <th>Ft/óra</th>
+            <th>Euró/óra</th>
             <th>Dátum</th>
             <th>Eredmény</th>
         </tr>
@@ -60,6 +61,7 @@
             <td th:text="${match.getUser2Points()}"></td>
             <td th:text="${match.getPlaceName()}"></td>
             <td th:text="${match.getPlacePrice()}"></td>
+            <td th:text="${match.getPlacePriceEur()}"></td>
             <td th:text="${match.getMatchDate}"></td>
             <td>
                 <span th:if="${match.getUser1Points() > match.getUser2Points()}" th:text="'A nyertes: ' + ${match.user1Name}"></span>
