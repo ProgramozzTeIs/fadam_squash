@@ -21,11 +21,13 @@ import pti.sb_sqashadmin_mvc.service.AppService;
 public class AppController {
 
 	private AppService service;
+
 	@Autowired
-	public AppController() {
-		
-		this.service = new AppService();
+	public AppController(AppService service) {
+		super();
+		this.service = service;
 	}
+	
 	
 	@GetMapping("/")
 	public String firstPage() {
@@ -34,6 +36,8 @@ public class AppController {
 		return "login.html";
 	}
 	
+	
+
 	@PostMapping("/login")
 	public String login(Model model,
 						@RequestParam(name = "username") String userName,
