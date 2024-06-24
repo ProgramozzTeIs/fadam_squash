@@ -174,7 +174,7 @@ public class AppService {
 
 		AdminDTO adminDto = null;
 		User admin = db.getUserById(userId);
-		if (admin.isAdmin() == true) {
+		if (admin.isAdmin() == true && admin.isLoggedin()==true) {
 
 			UserDTO userDto = getUserDTOFromUser(admin);
 
@@ -309,12 +309,19 @@ public class AppService {
 
 		String password = "";
 
+		
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		
 		for (int index = 0; index < 3; index++) {
-			int number = rand.nextInt(10);
+	        
+			int randomIndex = rand.nextInt(characters.length());
+	        
+	        
+	        char randomChar = characters.charAt(randomIndex);
 
-			String numberString = number + "";
 
-			password = password + numberString;
+			password = password + randomChar;
 
 		}
 		return password;
