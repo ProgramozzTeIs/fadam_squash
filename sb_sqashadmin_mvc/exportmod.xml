@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<matchs>
+  <match>
+    <user1name>XMLből olvasva</user1name>
+    <user1points>99</user1points>
+    <user2name>Király Judit</user2name>
+    <user2points>1000</user2points>
+    <locationname>Squashpálya 1</locationname>
+    <locationprice>7560</locationprice>
+    <locationpriceeur>12.658869</locationpriceeur>
+    <localdate>2024-06-14</localdate>
+  </match>
+  <match>
+    <user1name>Ádám</user1name>
+    <user1points>2</user1points>
+    <user2name>Judit</user2name>
+    <user2points>2</user2points>
+    <locationname>Squashpálya 1</locationname>
+    <locationprice>5000</locationprice>
+    <locationpriceeur>12.658869</locationpriceeur>
+    <localdate>2024-06-13</localdate>
+  </match>
+  <match>
+    <user1name>Judit</user1name>
+    <user1points>5</user1points>
+    <user2name>Mária</user2name>
+    <user2points>2</user2points>
+    <locationname>Teke pálya</locationname>
+    <locationprice>5000</locationprice>
+    <locationpriceeur>12.658869</locationpriceeur>
+    <localdate>2024-06-05</localdate>
+  </match>
+  <match>
+    <user1name>Ádám</user1name>
+    <user1points>13</user1points>
+    <user2name>Ariel</user2name>
+    <user2points>7</user2points>
+    <locationname>Squashpálya 1</locationname>
+    <locationprice>5000</locationprice>
+    <locationpriceeur>12.658869</locationpriceeur>
+    <localdate>2024-05-29</localdate>
+  </match>
+  <match>
+    <user1name>Admin</user1name>
+    <user1points>3</user1points>
+    <user2name>Ádám</user2name>
+    <user2points>4</user2points>
+    <locationname>Squashpálya 1</locationname>
+    <locationprice>5000</locationprice>
+    <locationpriceeur>12.658869</locationpriceeur>
+    <localdate>2022-02-02</localdate>
+  </match>
+  <match>
+    <user1name>Király Judit</user1name>
+    <user1points>1</user1points>
+    <user2name>Vilmos herceg</user2name>
+    <user2points>0</user2points>
+    <locationname>Squashpálya 1</locationname>
+    <locationprice>5000</locationprice>
+    <locationpriceeur>12.658869</locationpriceeur>
+    <localdate>2006-01-11</localdate>
+  </match>
+</matchs>

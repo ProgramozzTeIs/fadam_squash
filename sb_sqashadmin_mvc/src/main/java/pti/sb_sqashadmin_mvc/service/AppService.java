@@ -1,5 +1,6 @@
 package pti.sb_sqashadmin_mvc.service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.jdom2.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -25,18 +27,20 @@ import pti.sb_sqashadmin_mvc.model.Location;
 import pti.sb_sqashadmin_mvc.model.LocationPriceEuro;
 import pti.sb_sqashadmin_mvc.model.Match;
 import pti.sb_sqashadmin_mvc.model.User;
+import pti.sb_sqashadmin_mvc.xml.XMLParser;
 
 @Service
 public class AppService {
 
 	private Database db;
+	private XMLParser parser;
 
 	@Autowired
-	public AppService() {
-
-		this.db = new Database();
+	public AppService(Database db, XMLParser parser) {
+		super();
+		this.db = db;
+		this.parser = parser;
 	}
-
 	public UserDTO login(String userName, String password) {
 
 		User user = db.getUserByNameAndPassword(userName, password);
@@ -58,6 +62,9 @@ public class AppService {
 
 		return userDto;
 	}
+
+
+	
 
 	public MatchListDTO getAllMatchs(int userId, Integer playerId, Integer locationId) {
 
@@ -375,6 +382,34 @@ public class AppService {
 		return returnValue;
 		
 	}
+
+		public MatchListDTO getAndExportAllMatchs(int userId, String filePath) throws IOException {
+			
+			MatchListDTO dto = this.getAllMatchs(userId, null, null);
+			
+			parser.export(dto.getMatchDtos(), filePath);
+			
+			return dto;
+		}
+		public MatchListDTO importFromXml(int userId, String filePath) throws JDOMException, IOException {
+			
+			
+			MatchListDTO dto = this.getAllMatchs(userId, 0, 0);	//nem kér le match-et
+			
+			
+			
+			if (dto != null) {
+			
+			
+			List<MatchDTO> matchList = parser.importXml(filePath);
+			
+			dto.setMatchDtos(matchList);
+			
+			}
+			
+			
+			return dto;
+		}
 
 
 

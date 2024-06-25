@@ -72,6 +72,24 @@
     </tbody>
 </table>
 
+<h4>Exportálás xml-be</h4>
 
+<form action="/match/export" method="post">
+	<input type="hidden" th:value="${matchdto.getUserDto().getId()}" name="uid"/>
+	<input type="submit"/>
+	<label for="path">Fájl neve:</label>
+	<input type="text"  name="path" />
+
+</form>
+
+<h4>Importálás xml-ből</h4>
+
+<form action="/match/import" method="post">
+	<input type="hidden" th:value="${matchdto.getUserDto().getId()}" name="uid"/>
+	<input type="submit"/>
+	<label for="path">Fájl neve:</label>
+	<input type="file"  name="path"  accept=".xml"/>
+
+</form>
 </body>
 </html>

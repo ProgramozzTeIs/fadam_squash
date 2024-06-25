@@ -2,8 +2,10 @@ package pti.sb_sqashadmin_mvc.controller;
 
 
 
-import java.util.Date;
 
+import java.io.IOException;
+import java.util.Date;
+import org.jdom2.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -212,6 +214,31 @@ public class AppController {
 		return "admin.html";
 	}
 								
+	@PostMapping("/match/export")
+	public String exportToXML(Model model,
+								@RequestParam("uid") int userId ,
+								@RequestParam("path") String filePath) throws IOException{
+		
+		MatchListDTO dto = null;
+		
+		dto = service.getAndExportAllMatchs(userId, filePath);
+		
+		model.addAttribute("matchdto", dto);
+		
+		return "index.html";
+	}
 	
+	@PostMapping("/match/import")
+	public String importFromXml(Model model,
+			@RequestParam("uid") int userId ,
+			@RequestParam("path") String filePath) throws JDOMException, IOException {
+		
+		MatchListDTO dto = null;
+		
+		dto = service.importFromXml(userId, filePath);
+		
+		model.addAttribute("matchdto", dto);
+		return "index.html";
+	}
 	
 }
