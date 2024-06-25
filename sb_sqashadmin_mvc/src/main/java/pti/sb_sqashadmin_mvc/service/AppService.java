@@ -6,7 +6,9 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +75,8 @@ public class AppService {
 
 			List<Location> locations = db.getAllLocation();
 
+			Map <Integer, Float> currencyExchanges = new HashMap<>();
+			
 			for (int index = 0; index < matchList.size(); index++) {
 
 				Match currentMatch = matchList.get(index);
@@ -99,6 +103,9 @@ public class AppService {
 				String locationName = "";
 				int locationPrice = 0;
 
+				
+				
+				
 				for (int locationIndex = 0; locationIndex < locations.size(); locationIndex++) {
 
 					Location currentLocation = locations.get(locationIndex);
@@ -107,13 +114,19 @@ public class AppService {
 
 						locationName = currentLocation.getName();
 						locationPrice = currentLocation.getPrice();
+						
+						if(!currencyExchanges.containsKey(locationPrice)) {
+						
+							currencyExchanges.put(locationPrice, this.getPlacePriceEur(locationPrice));
+							
+						}
 						break;
 					}
 
 				}
 
 				MatchDTO currentMAtchDto = new MatchDTO(user1Name, currentMatch.getUser1Points(), user2Name,
-						currentMatch.getUser2Points(), locationName, locationPrice, currentMatch.getMatchDate(), this.getPlacePriceEur(locationPrice));
+						currentMatch.getUser2Points(), locationName, locationPrice, currentMatch.getMatchDate(), currencyExchanges.get(locationPrice));
 				
 				
 				
@@ -356,7 +369,6 @@ public class AppService {
 		String url = "http://localhost:8081/exchange?huf="+huf;
 		
 		LocationPriceEuro euroCurr = restTemplate.getForObject(url, LocationPriceEuro.class);
-		
 		
 		float returnValue = euroCurr.getEur();
 		
