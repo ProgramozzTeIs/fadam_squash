@@ -16,6 +16,7 @@ import org.jdom2.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import pti.sb_sqashadmin_mvc.db.Database;
 import pti.sb_sqashadmin_mvc.dto.AdminDTO;
@@ -391,7 +392,7 @@ public class AppService {
 			
 			return dto;
 		}
-		public MatchListDTO importFromXml(int userId, String filePath) throws JDOMException, IOException {
+		public MatchListDTO importFromXml(int userId, MultipartFile file) throws JDOMException, IOException {
 			
 			
 			MatchListDTO dto = this.getAllMatchs(userId, 0, 0);	//nem kér le match-et
@@ -401,7 +402,7 @@ public class AppService {
 			if (dto != null) {
 			
 			
-			List<MatchDTO> matchList = parser.importXml(filePath);
+			List<MatchDTO> matchList = parser.importXml(file);
 			
 			dto.setMatchDtos(matchList);
 			

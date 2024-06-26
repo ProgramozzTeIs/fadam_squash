@@ -84,11 +84,11 @@
 
 <h4>Importálás xml-ből</h4>
 
-<form action="/match/import" method="post">
+<form action="/match/import" method="post" enctype = "multipart/form-data">
 	<input type="hidden" th:value="${matchdto.getUserDto().getId()}" name="uid"/>
 	<input type="submit"/>
 	<label for="path">Fájl neve:</label>
-	<input type="file"  name="path"  accept=".xml"/>
+	<input type="file"  name="xmlfile"  accept=".xml"/>
 
 </form>
 </body>

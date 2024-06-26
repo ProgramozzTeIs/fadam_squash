@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import pti.sb_sqashadmin_mvc.dto.AdminDTO;
 import pti.sb_sqashadmin_mvc.dto.MatchListDTO;
@@ -231,11 +232,11 @@ public class AppController {
 	@PostMapping("/match/import")
 	public String importFromXml(Model model,
 			@RequestParam("uid") int userId ,
-			@RequestParam("path") String filePath) throws JDOMException, IOException {
+			@RequestParam("xmlfile") MultipartFile file) throws JDOMException, IOException {
 		
 		MatchListDTO dto = null;
 		
-		dto = service.importFromXml(userId, filePath);
+		dto = service.importFromXml(userId, file);
 		
 		model.addAttribute("matchdto", dto);
 		return "index.html";

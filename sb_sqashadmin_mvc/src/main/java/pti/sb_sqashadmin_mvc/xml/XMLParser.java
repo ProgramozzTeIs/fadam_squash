@@ -15,6 +15,7 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import pti.sb_sqashadmin_mvc.dto.MatchDTO;
 @Repository
@@ -95,11 +96,22 @@ public class XMLParser {
 		
 	}
 
-	public List<MatchDTO> importXml(String filePath) throws JDOMException, IOException {
+	public List<MatchDTO> importXml(MultipartFile file) throws JDOMException, IOException {
+		
+		System.out.println(file.getSize());
 		
 		SAXBuilder sax = new SAXBuilder();
 		
-		Document doc = sax.build(new File(filePath));
+		File xmlFile = new File("import.xml");
+		
+	//	xmlFile.createNewFile();
+		
+		
+		file.transferTo(xmlFile.toPath());
+		
+		
+		
+		Document doc = sax.build(xmlFile);
 
         Element rootElement = doc.getRootElement();
 		
